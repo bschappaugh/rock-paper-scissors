@@ -16,17 +16,21 @@ function computerPlay(array=["rock", "paper", "scissors"]) {
 function playRound(computerSelection, playerSelection) {
     // Checks if the player entered a valid selection.
     if (playerSelection !== "paper" && playerSelection !== "rock" && playerSelection !== "scissors") {
+        console.log()
         return "Invalid selection. Please select rock, paper, or scissors.";
     // Checks if the player's selection beats the computer's selection
     } else if (computerSelection === "rock" && playerSelection === "paper" || computerSelection === "scissors" && playerSelection === "rock" || computerSelection === "paper" && playerSelection === "scissors") {
         playerScore++;
+        console.log(`You Win! ${capitalPlayerSelection} beats ${capitalComputerSelection}`);
         return`You Win! ${capitalPlayerSelection} beats ${capitalComputerSelection}`;
     // Checks if the player and computer tie. 
     } else if (computerSelection === playerSelection) {
+        console.log(`Tie! You both chose ${playerSelection}`);
         return `Tie! You both chose ${playerSelection}`;
     // If all other arguments are not met, the player must have lost. 
     } else {
         computerScore++;
+        console.log(`You Lose! ${capitalComputerSelection} beats ${capitalPlayerSelection}`);
         return `You Lose! ${capitalComputerSelection} beats ${capitalPlayerSelection}`;
     }
 }
@@ -36,22 +40,24 @@ function capitalize(word) {
     return word[0].toUpperCase() + word.slice(1).toLowerCase();
 }
 
-// Game loop which plays through five times and then prints the score. 
-function game() {
-    for (let i = 0; i < 5; i++) {
-        computerSelection = computerPlay();
-        playerSelection = prompt("Please choose rock, paper, or scissors: ").toLowerCase();
-        capitalComputerSelection = capitalize(computerSelection);
-        capitalPlayerSelection = capitalize(playerSelection);
-        result = playRound(computerSelection, playerSelection);
-        if (result === "Invalid selection. Please select rock, paper, or scissors.") {
-            i--;
-        }
-        console.log(result);
-
-    }
-    console.log(`Player: ${playerScore}`);
-    console.log(`Computer: ${computerScore}`);
-}
-
-game();
+document.getElementById("rock").addEventListener("click", function() {
+    computerSelection = computerPlay();
+    playerSelection = "rock";
+    capitalComputerSelection = capitalize(computerSelection);
+    capitalPlayerSelection = capitalize(playerSelection);
+    playRound(computerSelection, playerSelection)
+});
+document.getElementById("paper").addEventListener("click", function() {
+    computerSelection = computerPlay();
+    playerSelection = "paper";
+    capitalComputerSelection = capitalize(computerSelection);
+    capitalPlayerSelection = capitalize(playerSelection);
+    playRound(computerPlay(), "paper")
+});
+document.getElementById("scissors").addEventListener("click", function() {
+    computerSelection = computerPlay();
+    playerSelection = "scissors";
+    capitalComputerSelection = capitalize(computerSelection);
+    capitalPlayerSelection = capitalize(playerSelection);
+    playRound(computerPlay(), "scissors")
+});
